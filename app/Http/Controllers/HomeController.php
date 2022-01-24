@@ -66,4 +66,11 @@ class HomeController extends Controller
         // 取得したメモをビューに渡す
         return view('edit', compact('memo', 'user', 'memos'));
     }
+
+    public function update(Request $request, $id)
+    {
+        $inputs = $request->all();
+        Memo::where('id',$id)->update(['content' => $inputs['content']]);
+        return redirect()->route('home');
+    }
 }
