@@ -25,20 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // ログインしているユーザーの情報をビューへ渡す
-        $user = \Auth::user();
-        // メモ一覧を取得
-        // ASC=昇順,DESC=降順
-        $memos = Memo::where('user_id', $user['id'])->where('status', 1)->orderBy('updated_at', 'DESC')->get();
-        return view('create', compact('user', 'memos'));
+        return view('create');
     }
 
     public function create()
     {
-        // ログインしているユーザーの情報をビューへ渡す
-        $user = \Auth::user();
-        $memos = Memo::where('user_id', $user['id'])->where('status', 1)->orderBy('updated_at', 'DESC')->get();
-        return view('create', compact('user','memos'));
+        return view('create');    
     }
 
     public function store(Request $request)
@@ -77,11 +69,8 @@ class HomeController extends Controller
         // 該当するIDのメモをデータベースから取得
         $user = \Auth::user();
         $memo = Memo::where('status', 1)->where('id', $id)->where('user_id', $user['id'])->first();
-        $memos = Memo::where('user_id', $user['id'])->where('status', 1)->orderBy('updated_at', 'DESC')->get();
-        // dd($memo);
         // 取得したメモをビューに渡す
-        $tags = Tag::where('user_id', $user['id'])->get();
-        return view('edit', compact('memo', 'user', 'memos', 'tags'));
+        return view('edit', compact('memo'));
     }
 
     public function update(Request $request, $id)
